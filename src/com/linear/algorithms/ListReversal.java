@@ -3,51 +3,45 @@ package com.linear.algorithms;
 /**
  * Created by Jerry on 3/19/16.
  */
-class SingleListNode {
-   int value;
-   SingleListNode next;
 
-    public SingleListNode(int value, SingleListNode next) {
+class ListNode<E> {
+    E value;
+    ListNode<E> prev;
+    ListNode<E> next;
+
+    public ListNode(E value) {
+        this.value = value;
+    }
+
+    public ListNode(E value, ListNode<E> next) {
         this.value = value;
         this.next = next;
     }
-}
 
-class DoubleListNode {
-    int value;
-    DoubleListNode prev;
-    DoubleListNode next;
-
-    public DoubleListNode(int value) {
+    public ListNode(E value, ListNode<E> prev, ListNode<E> next) {
         this.value = value;
-    }
-
-    public void setPrev(DoubleListNode prev) {
         this.prev = prev;
-    }
-
-    public void setNext(DoubleListNode next) {
         this.next = next;
     }
 
-    public DoubleListNode getPrev() {
-        return prev;
+    public void setNext(ListNode<E> next) {
+        this.next = next;
     }
 
-    public DoubleListNode getNext() {
-        return next;
+    public void setPrev(ListNode<E> prev) {
+        this.prev = prev;
     }
 }
 
 
 public class ListReversal {
 
-    static SingleListNode singleReverse(SingleListNode node) {
+    static ListNode singleReverse(ListNode node) {
         if (node == null) {
             return node;
         }
 
-        SingleListNode current, p;
+        ListNode current, p;
         current = node;
         //当前的元素还有后继
         while (current.next != null) {
@@ -63,13 +57,13 @@ public class ListReversal {
         return node;
     }
 
-    static DoubleListNode doubleReverse(DoubleListNode node) {
+    static ListNode doubleReverse(ListNode node) {
         if (node == null) {
             return node;
         }
 
-        DoubleListNode current = node;
-        DoubleListNode p;
+        ListNode current = node;
+        ListNode p;
 
         while(null != current)
         {
@@ -89,23 +83,11 @@ public class ListReversal {
         return node;
     }
 
-    static void print(SingleListNode node) {
+    static void print(ListNode node) {
         if (node == null) {
             return;
         }
-        SingleListNode p = node;
-        while ( p != null) {
-            System.out.print(p.value + " >>> ");
-            p = p.next;
-        }
-        System.out.println();
-    }
-
-    static void print(DoubleListNode node) {
-        if (node == null) {
-            return;
-        }
-        DoubleListNode p = node;
+        ListNode p = node;
         while ( p != null) {
             System.out.print(p.value + " >>> ");
             p = p.next;
@@ -114,23 +96,20 @@ public class ListReversal {
     }
 
     public static void main(String[] args) {
-        final SingleListNode node = new SingleListNode(1, new SingleListNode(2, new SingleListNode(3, new SingleListNode(4, null))));
+        final ListNode node = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, null))));
+        System.out.println("Single List Reverse");
         print(node);
         print(singleReverse(node));
 
-        final DoubleListNode n1 = new DoubleListNode(1);
-        final DoubleListNode n2 = new DoubleListNode(2);
-        final DoubleListNode n3 = new DoubleListNode(3);
-        final DoubleListNode n4 = new DoubleListNode(4);
+        System.out.println("Double List Reverse");
+        final ListNode n1 = new ListNode(1, null, null);
+        final ListNode n2 = new ListNode(2, n1, null);
+        final ListNode n3 = new ListNode(3, n2, null);
+        final ListNode n4 = new ListNode(4, n3, null);
 
         n1.setNext(n2);
-
-        n2.setPrev(n1);
         n2.setNext(n3);
-
-        n3.setPrev(n2);
         n3.setNext(n4);
-
         n4.setPrev(n3);
 
         print(n1);
